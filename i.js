@@ -126,23 +126,14 @@ app.get("/get-data", (req, res) => {
     files.forEach((file) => {
       readMetadata(file)
         .then((metadata) => {
-          console.log(file);
-          console.log("File metadata:", metadata);
+          logger(file);
+          logger(metadata);
         })
         .catch((error) => {
           console.error("Error:", error);
         });
     });
     res.send("meta");
-  } catch (error) {
-    logger(error);
-    res.send("Error uploading file.");
-  }
-});
-
-app.get("/get-deletion-time", (req, res) => {
-  try {
-    res.status(200).send({ data: 10, message: "success" });
   } catch (error) {
     logger(error);
     res.send("Error uploading file.");

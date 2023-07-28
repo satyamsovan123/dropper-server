@@ -1,3 +1,3 @@
-const AUTO_DELETION_TIME = 3000;
+const AUTO_DELETION_TIME = 30;
 
 module.exports = { AUTO_DELETION_TIME };

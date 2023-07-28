@@ -15,6 +15,12 @@ const serverConstants = {
     "Server encountered an error while fetching data. Please try again later.",
   GENERIC_ERROR_MESSAGE_WHILE_UPLOADING:
     "Server encountered an error while processing data. Please try again later.",
+  UNABLE_TO_UPLOAD_FILE: "Unable to upload file.",
+  UNABLE_TO_DOWNLOAD_FILE: "Unable to download file.",
+
+  UPLOAD_SUCCESSFUL: "Files uploaded successfully.",
+  FETCH_SUCCESSFUL: "Files fetched successfully.",
+  METADATA_GENERATION_SUCCESSFUL: "Metadata generated successfully.",
 };
 
 module.exports = serverConstants;

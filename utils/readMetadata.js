@@ -25,6 +25,7 @@ const readMetadata = async (file) => {
       // Parse the metadata content as JSON to get the metadata object
       const metadata = JSON.parse(metadataContent);
 
+      // console.log(metadata);
       return metadata;
     }
   } catch (error) {

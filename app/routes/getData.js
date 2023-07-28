@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { getData } = require("../controllers/data/getData");
+const { getData, downloadFile } = require("../controllers/data/getData");
 
 router.get("/get-data", getData);
+router.post("/download-file", downloadFile);
 
 module.exports = router;

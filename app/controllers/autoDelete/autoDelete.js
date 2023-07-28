@@ -27,10 +27,11 @@ const autoDelete = async (req, res) => {
 const autoDeletionTime = async (req, res) => {
   let response = {
     data: {},
-    message: `auto delete time - ${AUTO_DELETION_TIME}`,
+    message: `auto delete time`,
     code: 200,
   };
   try {
+    response.data = AUTO_DELETION_TIME;
     let generatedResponse = successResponseBuilder(response);
     return res.status(generatedResponse.code).send(generatedResponse);
   } catch (error) {

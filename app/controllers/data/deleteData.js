@@ -7,8 +7,10 @@ const serverConstants = require("../../../constants/serverConstants");
 
 const deleteData = async (req, res) => {
   let response = {
-    data: {},
-    message: `delete`,
+    data: {
+      name: "Hello delete",
+    },
+    message: "Delete called!",
     code: 200,
   };
   try {

@@ -1,7 +1,6 @@
 const verifyRequest = (param) => {
   return async (req, res, next) => {
     try {
-      console.log(param);
       next();
     } catch (error) {
       console.error(`Error verify`, error);

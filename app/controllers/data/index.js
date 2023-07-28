@@ -1,5 +1,11 @@
-const { getData } = require("./getData");
+const { getData, downloadFile } = require("./getData");
 const { deleteData } = require("./deleteData");
-const { uploadData } = require("./uploadData");
+const { uploadMetadata, uploadFiles } = require("./uploadData");
 
-module.exports = { getData, deleteData, uploadData };
+module.exports = {
+  getData,
+  deleteData,
+  uploadMetadata,
+  uploadFiles,
+  downloadFile,
+};
