@@ -1,9 +1,13 @@
 const fs = require("fs-extra");
 const path = require("path");
+const serverConstants = require("../constants/serverConstants");
 
 const readMetadata = async (file) => {
   try {
-    const fileContent = await fs.readFile("files/" + file, "utf8");
+    const fileContent = await fs.readFile(
+      serverConstants.LOCATION + "/" + file,
+      "utf8"
+    );
 
     // Find the start and end position of the metadata comment
     const startMarker = "/* Metadata: ";

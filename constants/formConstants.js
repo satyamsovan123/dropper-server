@@ -8,6 +8,7 @@ const formConstants = {
   INVALID_TIMESTAMP:
     "Timestamp is a required field. Please provide a valid timestamp.",
   INVALID_PASSPHRASE: "Please provide a valid passphrase.",
+  INVALID_AUTO_DELETE: "Please provide true or false for auto deletion.",
 
   SAVE_SUCCESS: "Your data is saved successfully.",
 };

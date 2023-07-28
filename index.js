@@ -12,19 +12,21 @@ const { logger } = require("./utils/logger");
 const { dateFormatter } = require("./utils/dateFormatter");
 const { readMetadata } = require("./utils/readMetadata");
 const { addMetadata } = require("./utils/addMetadata");
+const { verifyRequest } = require("./middlewares/verifyRequest");
 
 app.use(express.static("public"));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const storageOptions = multer.diskStorage({
-  destination: "files",
+  destination: serverConstants.LOCATION,
   filename: (req, file, cb) => {
     const newFilename = `${file.originalname}`;
     cb(null, newFilename);
   },
 });
 const uploader = multer({ storage: storageOptions });
-
-app.use(cors());
 
 app.get("/", (req, res) => {
   try {
@@ -49,7 +51,6 @@ app.post("/upload-data", uploader.any(), async (req, res) => {
     message: "",
     data: [],
   };
-
   try {
     if (!req.files || req.files.length === 0) {
       response.message = formConstants.INVALID_FILES;
@@ -76,6 +77,9 @@ app.post("/upload-data", uploader.any(), async (req, res) => {
     ) {
       response.message = formConstants.INVALID_PASSPHRASE;
       return res.status(400).send(response);
+    } else if (typeof parsedData.autoDelete !== "boolean") {
+      response.message = formConstants.INVALID_PASSPHRASE;
+      return res.status(400).send(response);
     }
 
     const newMetadata = {
@@ -83,25 +87,26 @@ app.post("/upload-data", uploader.any(), async (req, res) => {
       deviceIdentity: parsedData.deviceIdentity,
       passphrase: parsedData.passphrase,
       timeStamp: dateFormatter(parsedData.timeStamp),
+      autoDelete: parsedData.autoDelete,
     };
 
     // Attach metadata to the uploaded files
 
     const files = req.files;
     files.forEach((file) => {
-      console.log("_----------------------------");
+      // console.log("_----------------------------");
 
       addMetadata(file, newMetadata)
         .then((success) => {
           console.log("File metadata added successfully.");
         })
         .catch((error) => {
-          console.error("Error:", error);
+          console.error("Error metadata add:", error);
         });
-      console.log("_----------------------------");
+      // console.log("_----------------------------");
     });
 
-    // logger([req.files, parsedData, newMetadata]);
+    logger([req.body, req.files, parsedData, newMetadata]);
 
     response.message = formConstants.SAVE_SUCCESS;
     return res.status(201).send(response);
@@ -115,7 +120,6 @@ app.post("/upload-data", uploader.any(), async (req, res) => {
 app.get("/get-data", (req, res) => {
   try {
     const files = fs.readdirSync("files");
-
     files.forEach((file) => {
       readMetadata(file)
         .then((metadata) => {
@@ -126,7 +130,16 @@ app.get("/get-data", (req, res) => {
           console.error("Error:", error);
         });
     });
-    res.send("files");
+    res.send("meta");
+  } catch (error) {
+    logger(error);
+    res.send("Error uploading file.");
+  }
+});
+
+app.get("/get-deletion-time", (req, res) => {
+  try {
+    res.status(200).send({ data: 10, message: "success" });
   } catch (error) {
     logger(error);
     res.send("Error uploading file.");
