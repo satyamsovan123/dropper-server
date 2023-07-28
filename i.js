@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+
+require("dotenv").config();
+
 const multer = require("multer");
 const cors = require("cors");
 const fs = require("fs-extra");
@@ -13,6 +15,7 @@ const { dateFormatter } = require("./utils/dateFormatter");
 const { readMetadata } = require("./utils/readMetadata");
 const { addMetadata } = require("./utils/addMetadata");
 const { verifyRequest } = require("./middlewares/verifyRequest");
+const port = serverConstants.PORT;
 
 app.use(express.static("public"));
 app.use(cors());
@@ -147,5 +150,5 @@ app.get("/get-deletion-time", (req, res) => {
 });
 
 app.listen(port, () => {
-  logger(`Server running at http://localhost:${port}`);
+  logger(`Server running at ${port}`);
 });
